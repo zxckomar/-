@@ -1,0 +1,44 @@
+'''#3
+from random import randint
+A = [randint(0,5) for x in range (5)]
+print("Массив:")
+for x in range(5):
+    print(A[x], end = " ")
+print("\n")
+for z in range(0,6):
+    if A.count(z)>=2:
+        print("Есть:", z,",",A.count(z))
+        break
+else:
+    print("Нет")
+'''
+
+'''#2
+from random import randint
+A = [randint(0,5) for x in range (5)]
+print("Массив:")
+for x in range(5):
+    print(A[x], end = " ")
+print("\n")
+for i in range(len(A)-1):
+    if A[i] == A[i+1]:
+        print("Есть:", A[i])
+        break
+else:
+    print("Нет")
+'''
+'''#1
+from random import randint
+x = int(input("Введите размер массива:"))
+A = [randint(0,5) for x in range (x)]
+print("Массив:\n",*A)
+zxc = int(input("Что ищем:"))
+if zxc in A:
+    c = A.index(zxc)
+    print("Нашли:")
+    for i in range(0, x):
+        if A[i] == zxc:
+            print("A[",i,"] =", zxc)
+else:
+    print("Не нашли.")
+'''
