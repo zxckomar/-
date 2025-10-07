@@ -1,0 +1,32 @@
+'''
+from random import randint
+A = [randint(0,5) for i in range(5)]
+print ("Массив:")
+print (*A)
+print ("\n")
+x = min(A)
+z = max(A)
+print("Минимальный элемент:", "A[",A.index(x),"]=",x)
+print("Максимальный элемент:", "A[",A.index(z),"]=",z)
+'''#1
+'''
+from random import randint
+A = [randint(0,5) for i in range(5)]
+print ("Массив:")
+print (*A)
+x = max(A)
+print("Мaксимальный элемент:", "A[",A.index(x),"]=",x)
+c = A.index(x)
+A[c] = -10
+z = max(A)
+print("Второй максимум:", "A[",A.index(z),"]=",z)
+'''#2
+'''
+print ("Массив:")
+A = [int(x) for x in input().split()]
+print (*A)
+c = max(A)
+y = A.count(c)
+print("Максимальное значение",c)
+print("Количество элементов",y)
+'''#3
