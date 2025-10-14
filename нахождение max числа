@@ -1,32 +1,32 @@
-'''
 from random import randint
-A = [randint(0,5) for i in range(5)]
+A = [randint(0,6) for i in range(6)]
 print ("Массив:")
 print (*A)
-print ("\n")
-x = min(A)
-z = max(A)
-print("Минимальный элемент:", "A[",A.index(x),"]=",x)
-print("Максимальный элемент:", "A[",A.index(z),"]=",z)
-'''#1
-'''
+print("Результат:")
+A.insert(0,A[5])
+A.pop(6)
+print(*A)
+
 from random import randint
-A = [randint(0,5) for i in range(5)]
+A = [randint(0,6) for i in range(6)]
 print ("Массив:")
 print (*A)
-x = max(A)
-print("Мaксимальный элемент:", "A[",A.index(x),"]=",x)
-c = A.index(x)
-A[c] = -10
-z = max(A)
-print("Второй максимум:", "A[",A.index(z),"]=",z)
-'''#2
-'''
+print("Результат:")
+z = len(A)//2-1
+print(*A[z::-1] + A[:z:-1])
+
+from random import randint
+A = [randint(-100,100) for i in range(6)]
 print ("Массив:")
-A = [int(x) for x in input().split()]
 print (*A)
-c = max(A)
-y = A.count(c)
-print("Максимальное значение",c)
-print("Количество элементов",y)
-'''#3
+print("Результат:")
+A.sort(reverse=True)
+if 0 in A:
+    A.remove(0)
+    A.append(0)
+zxc = 0
+for i in A:
+    if i>0:
+        zxc+=1
+print(*A)
+print("Количество положительных элементов:",zxc)
