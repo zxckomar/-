@@ -182,3 +182,16 @@ restart_text = c.create_text(WIDTH/2, HEIGHT-HEIGHT/3,
 c.tag_bind(restart_text, "<Button-1>", clicked)
 start_game()
 root.mainloop()
+'''
+A = []
+for x in range(13):
+    y = bin(x)
+    z = str(y[2:])
+    if x % 2 == 0:
+        int((z + "10"), 2)
+        A.append(int((z + "10"), 2))
+    elif x % 2 != 0:
+        int(("1" + z + "01"), 2)
+        A.append(int(("1" + z + "01"), 2))
+print(max(A))
+'''
