@@ -194,9 +194,5 @@ for x in range(13):
         int(("1" + z + "01"), 2)
         A.append(int(("1" + z + "01"), 2))
 print(max(A))
-'''=== СООБЩЕНИЕ ОТ ГЛАВНОГО ИНЖИНЕРА "АЛ" ===
-    Данный файл ограниченного доступа и содержит ключ управления роботами. Формат кодирования: архивация + сжатие + base85. 
-    Закодированное сообщение в формате b'текст': 
-    b'K|*?2M?`ySBxW#sJ|SabAwp_OSUyfOOk!DmaaJiwLvCS4V?8l6CVC+~CQEoDST{aCKX5~1NP9dub8|jZb3<fkRzh)JXC-7LUU*PbH%(1AIAc#MVP-~Sab#~WURi!CEqqQwXh2AIeQ7B{PG@~^Rv~jRUsZHTV{#;AC^UE`LMbz1F*#IiYEd*oJykVIC08m^C1+<zY-nn4VkC8OQ(<jNS8zjOPeFG@DoR&TAxdvaWIrZ7B|%w7R82rZLq=&fDl}{+Xhu<UO+;uYW<_>0SbbwWb6PcGM@BL{epoF(a$!MyMN4F0X=^}gY-3Swb$5ASeN1k5NINz(OFbreV?B2zJ4RzIY*Rx@NHk1xD|9z_aV30ZNPc2wC~iu2S14&WZEZe5IVxamLR2s?FfcGMFfcGMFfcGMFfcGMFe_g*awc|KI9gFxFfcF' 
-    
-    Уровень доступа: СОВЕРШЕННО СЕКРЕТНО     
+'''
+ найден подозрительный файл с ключом к роботу‑кодировщику. Исследователи подозревают, что данные были многократно закодированы необычным способом; возможно, кратность длины кодирования имеет значение. Ваша 
