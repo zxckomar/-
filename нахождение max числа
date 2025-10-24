@@ -240,3 +240,32 @@ if z < 2 and z > 100:
 if x < 1 and z > 10**9:
     print("Неверное число.")
 print((x-x//7)//z+(x//7))
+n = int(input())
+c = [0] * (n + 1)
+s = [0] * (n + 1)
+
+for i in range(1, n + 1):
+    c[i] = int(input())
+for i in range(1, n + 1):
+    s[i] = int(input())
+
+min_s = [0] * (n + 1)
+min_s[1] = s[1]
+for i in range(2, n + 1):
+    min_s[i] = min(min_s[i - 1], s[i])
+
+total_load = 0
+ans = [0] * (n + 1)
+
+for i in range(n, 0, -1):
+    zxc = min(c[i], min_s[i] - total_load)
+    if zxc < 0:
+        zxc = 0
+    ans[i] = zxc
+    total_load += ans[i]
+
+for i in range(1, n + 1):
+    if ans[i] > 999999999999999999:
+        print(-ans[i])
+    else:
+        print(ans[i])
