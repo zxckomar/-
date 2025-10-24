@@ -195,49 +195,28 @@ for x in range(13):
         A.append(int(("1" + z + "01"), 2))
 print(max(A))
 '''
- �ò�          ��     ���h� *   *   ������ )4V    )4V��2      ��d���h�{ *   *    )4V c�E�    c�E���d )4V��2���h.� *   *   ������ )4V    )4V�������������h� 6   6    )4V������ E  (   @�����d�� P  �    P  b�  ���h�{ 6   6   ������ )4V E  (   @���d�� P��  �  �P  [  ���hO 6   6    )4V������ E  (   @�����d�� P  �  �P  [  ���h� �  �   )4V������ E u   @������d�� P  �  �P  �A  GET /admin/dashboard HTTP/1.1
-Host: 192.168.1.100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
-Authorization: Basic YWRtaW46c2VjcmV0MTIz
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-Connection: keep-alive
-
-���h.� E  E  ������ )4V E 7   @����d�� P��  �  6P  c�  HTTP/1.1 200 OK
-Server: nginx/1.18.0
-Date: Wed, 12 Sep 2024 10:30:00 GMT
-Content-Type: text/html; charset=UTF-8
-Content-Length: 1024
-Set-Cookie: session_token=abc123def456; Path=/; HttpOnly
-X-Flag: vsosh{http_ba$ic_c4ptured}
-Connection: keep-alive
-
-<!DOCTYPE html>
-<html>
-<head><title>Admin Dashboard</title></head>
-<body>
-<h1>Welcome, admin!</h1>
-<p>You have successfully logged into the admin panel.</p>
-<p>Secret flag: vsosh{http_ba$ic_c4ptured}</p>
-<div>System Status: All systems operational</div>
-</body>
-</html>���h� 6   6    c�E� )4V E  (   @����2��d09 P  �    P  ��  ���h�{ 6   6    )4V c�E� E  (   @����d��2 P09  p  �P  �i  ���hO 6   6    c�E� )4V E  (   @����2��d09 P  �  qP  �j  ���h� �   �    c�E� )4V E  �   @�G��2��d09 P  �  qP  ��  GET /admin/users HTTP/1.1
-Host: 192.168.1.100
-User-Agent: curl/7.68.0
-Authorization: Basic YWRtaW46c2VjcmV0MTIz
-Accept: */*
-X-Forwarded-For: 203.0.113.1
-
-���h.� N  N   )4V c�E� E @   @����d��2 P09  q  *P  o�  HTTP/1.1 200 OK
-Server: nginx/1.18.0
-Content-Type: application/json
-Content-Length: 156
-
-{"users": [
-    {"id": 1, "username": "admin", "role": "administrator", "email": "admin@company.com"},
-    {"id": 2, "username": "user1", "role": "user", "email": "user1@company.com"}
-]}���h� G   G     ^  )4V E  9   @����2�� 5 %�<          examplecom   ���h� [   [    )4V������ E  M   @���]��"�n P        P  ��  GET / HTTP/1.1
-Host: example.com
-
-
+a = int(input())
+b = int(input())
+c = int(input())
+p = int(input())
+for ma in (-1, 0, 1):
+    for mb in (-1, 0, 1):
+        for mc in (-1, 0, 1):
+            if ma*a + mb*b + mc*c == p:
+                left_weights = []
+                right_weights = []
+                if ma == -1:
+                    left_weights.append(a)
+                elif ma == 1:
+                    right_weights.append(a)
+                if mb == -1:
+                    left_weights.append(b)
+                elif mb == 1:
+                    right_weights.append(b)
+                if mc == -1:
+                    left_weights.append(c)
+                elif mc == 1:
+                    right_weights.append(c)
+                print(p, *left_weights)
+                print(*right_weights)
+                exit(0)
