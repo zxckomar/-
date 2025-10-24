@@ -233,3 +233,10 @@ else:
     zxc = int(a ** 0.5)
 print(zxc)
 '''
+z = int(input(""))
+x = int(input(""))
+if z < 2 and z > 100:
+    print("Неверное число.")
+if x < 1 and z > 10**9:
+    print("Неверное число.")
+print((x-x//7)//z+(x//7))
