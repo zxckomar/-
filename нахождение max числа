@@ -220,3 +220,16 @@ for ma in (-1, 0, 1):
                 print(p, *left_weights)
                 print(*right_weights)
                 exit(0)
+'''
+'''
+a = int(input())
+b = int(input())
+zxc = 0
+if b == a * a:
+    zxc = a * a * a
+elif b == a * a * a:
+    zxc = a * a
+else:
+    zxc = int(a ** 0.5)
+print(zxc)
+'''
