@@ -218,6 +218,7 @@ root.protocol("WM_DELETE_WINDOW", lambda: None)
 click_count = 0
 last_click_time = 0
 window_locked = True  # Флаг блокировки окна
+program_running = True  # Флаг работы программы
 
 
 def unlock_window():
@@ -231,10 +232,17 @@ def unlock_window():
 
 def exit_program():
     """Завершает программу"""
+    global program_running
+    program_running = False
+    try:
+        root.quit()
+        root.destroy()
+    except:
+        pass
     try:
         t.bye()
     except:
-        root.destroy()
+        pass
 
 
 def secret_combo_exit(event=None):
@@ -245,6 +253,9 @@ def secret_combo_exit(event=None):
 def check_triple_click(x, y):
     """Проверяет тройной клик в левом нижнем углу"""
     global click_count, last_click_time
+
+    if not program_running:
+        return
 
     # Область в левом нижнем углу (100x100 пикселей)
     screen_width = screen.window_width() // 2
@@ -288,16 +299,6 @@ def setup_key_bindings():
 
     # Фокусируем окно, чтобы оно получало события клавиатуры
     root.focus_force()
-
-
-# Регистрируем секретные лазейки
-t.onscreenclick(check_triple_click, btn=1)  # Левый клик для тройного клика
-
-# Настраиваем привязки клавиш
-setup_key_bindings()
-
-t.listen()
-t.speed(0)
 
 
 def draw_house():
@@ -429,11 +430,11 @@ def draw_sun():
 
 
 def clear_screen():
+    t.clear()
+    screen.bgcolor("lightblue")
     t.penup()
     t.goto(0, 0)
     t.pendown()
-    t.clear()
-    screen.bgcolor("lightblue")
 
 
 def draw_plus_sign():
@@ -476,27 +477,37 @@ def draw_plus_sign():
     t.pensize(1)
 
 
-def keep_focus():
-    """Периодически перефокусирует окно"""
-    root.focus_force()
-    if window_locked:  # Продолжаем только если окно заблокировано
-        root.after(1000, keep_focus)
+def safe_sleep(seconds):
+    """Безопасная пауза с проверкой флага программы"""
+    end_time = time.time() + seconds
+    while time.time() < end_time and program_running:
+        root.update()
+        time.sleep(0.1)
 
 
 def main():
-    global window_locked
+    global program_running
 
     try:
+        # Регистрируем секретные лазейки
+        t.onscreenclick(check_triple_click, btn=1)
+        setup_key_bindings()
+        t.listen()
+        t.speed(0)
+
         # Перефокусируем окно для гарантии работы клавиатуры
-        root.after(100, lambda: root.focus_force())
+        root.focus_force()
 
         # Рисуем улучшенный пейзаж
         draw_house()
         draw_tree()
         draw_sun()
 
-        # Ждем 3 секунды
-        time.sleep(3)
+        # Ждем 3 секунды (с проверкой выхода)
+        safe_sleep(3)
+
+        if not program_running:
+            return
 
         # Очищаем экран
         clear_screen()
@@ -505,27 +516,26 @@ def main():
         draw_plus_sign()
 
         # Ждем 10 секунд после завершения рисования
-        time.sleep(10)
+        safe_sleep(10)
+
+        if not program_running:
+            return
 
         # После завершения всей анимации разблокируем окно
-        # но секретные комбинации продолжают работать!
         unlock_window()
 
         print("Рисование завершено! Окно разблокировано.")
         print("Секретные способы выхода всё ещё работают:")
 
-
-        # Запускаем основной цикл Turtle
-        t.mainloop()
+        # Запускаем основной цикл Tkinter вместо Turtle
+        while program_running:
+            root.update()
+            time.sleep(0.1)
 
     except Exception as e:
         print(f"Ошибка: {e}")
     finally:
-        # Гарантируем выход
-        try:
-            t.bye()
-        except:
-            pass
+        exit_program()
 
 
 # Запускаем программу
