@@ -187,89 +187,348 @@ c.tag_bind(restart_text, "<Button-1>", clicked)
 start_game()
 root.mainloop()
 '''
-A = []
-for x in range(13):
-    y = bin(x)
-    z = str(y[2:])
-    if x % 2 == 0:
-        int((z + "10"), 2)
-        A.append(int((z + "10"), 2))
-    elif x % 2 != 0:
-        int(("1" + z + "01"), 2)
-        A.append(int(("1" + z + "01"), 2))
-print(max(A))
-'''
-a = int(input())
-b = int(input())
-c = int(input())
-p = int(input())
-for ma in (-1, 0, 1):
-    for mb in (-1, 0, 1):
-        for mc in (-1, 0, 1):
-            if ma*a + mb*b + mc*c == p:
-                left_weights = []
-                right_weights = []
-                if ma == -1:
-                    left_weights.append(a)
-                elif ma == 1:
-                    right_weights.append(a)
-                if mb == -1:
-                    left_weights.append(b)
-                elif mb == 1:
-                    right_weights.append(b)
-                if mc == -1:
-                    left_weights.append(c)
-                elif mc == 1:
-                    right_weights.append(c)
-                print(p, *left_weights)
-                print(*right_weights)
-                exit(0)
-'''
-'''
-a = int(input())
-b = int(input())
-zxc = 0
-if b == a * a:
-    zxc = a * a * a
-elif b == a * a * a:
-    zxc = a * a
-else:
-    zxc = int(a ** 0.5)
-print(zxc)
-'''
-z = int(input(""))
-x = int(input(""))
-if z < 2 and z > 100:
-    print("Неверное число.")
-if x < 1 and z > 10**9:
-    print("Неверное число.")
-print((x-x//7)//z+(x//7))
-n = int(input())
-c = [0] * (n + 1)
-s = [0] * (n + 1)
+#ЭТОТ КОД 
+import turtle as t
+import time
+import tkinter as tk
 
-for i in range(1, n + 1):
-    c[i] = int(input())
-for i in range(1, n + 1):
-    s[i] = int(input())
+# Создаем окно и блокируем его ДО начала рисования
+screen = t.Screen()
+screen.setup(width=1.0, height=1.0)  # 100% экрана
+screen.screensize(canvwidth=1.0, canvheight=1.0)
 
-min_s = [0] * (n + 1)
-min_s[1] = s[1]
-for i in range(2, n + 1):
-    min_s[i] = min(min_s[i - 1], s[i])
+# БЛОКИРОВКА ОКНА
+canvas = screen.getcanvas()
+root = canvas.winfo_toplevel()
 
-total_load = 0
-ans = [0] * (n + 1)
+# Убираем всю рамку окна - нельзя закрыть/свернуть
+root.overrideredirect(True)
 
-for i in range(n, 0, -1):
-    zxc = min(c[i], min_s[i] - total_load)
-    if zxc < 0:
-        zxc = 0
-    ans[i] = zxc
-    total_load += ans[i]
+# Размещаем на весь экран
+root.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}+0+0")
 
-for i in range(1, n + 1):
-    if ans[i] > 999999999999999999:
-        print(-ans[i])
+# Всегда поверх других окон
+root.attributes('-topmost', True)
+
+# Блокируем стандартное закрытие
+root.protocol("WM_DELETE_WINDOW", lambda: None)
+
+# Переменные для отслеживания тройного клика
+click_count = 0
+last_click_time = 0
+window_locked = True  # Флаг блокировки окна
+
+
+def unlock_window():
+    """Разблокирует окно (восстанавливает рамку)"""
+    global window_locked
+    window_locked = False
+    root.overrideredirect(False)
+    root.attributes('-topmost', False)
+    root.protocol("WM_DELETE_WINDOW", root.destroy)
+
+
+def exit_program():
+    """Завершает программу"""
+    try:
+        t.bye()
+    except:
+        root.destroy()
+
+
+def secret_combo_exit(event=None):
+    """Секретный выход по комбинации клавиш Ctrl+Alt+X"""
+    exit_program()
+
+
+def check_triple_click(x, y):
+    """Проверяет тройной клик в левом нижнем углу"""
+    global click_count, last_click_time
+
+    # Область в левом нижнем углу (100x100 пикселей)
+    screen_width = screen.window_width() // 2
+    screen_height = screen.window_height() // 2
+    corner_area = 100
+
+    # Проверяем, что клик в целевой области (левый нижний угол)
+    left_bound = -screen_width
+    bottom_bound = -screen_height
+
+    if (left_bound <= x <= left_bound + corner_area and
+            bottom_bound <= y <= bottom_bound + corner_area):
+
+        current_time = time.time()
+
+        # Если прошло больше 2 секунд - сбрасываем счетчик
+        if current_time - last_click_time > 2.0:
+            click_count = 1
+        else:
+            click_count += 1
+
+        last_click_time = current_time
+
+        if click_count >= 3:
+            exit_program()
     else:
-        print(ans[i])
+        # Клик вне целевой области - сбрасываем счетчик
+        click_count = 0
+
+
+# ПРАВИЛЬНАЯ РЕГИСТРАЦИЯ КОМБИНАЦИИ КЛАВИШ
+def setup_key_bindings():
+    """Настраивает привязки клавиш"""
+    # Привязываем комбинацию Ctrl+Alt+X к корневому окну
+    root.bind('<Control-Alt-KeyPress-x>', secret_combo_exit)
+    root.bind('<Control-Alt-KeyPress-X>', secret_combo_exit)  # Для Caps Lock
+
+    # Также привязываем к canvas на всякий случай
+    canvas.bind('<Control-Alt-KeyPress-x>', secret_combo_exit)
+    canvas.bind('<Control-Alt-KeyPress-X>', secret_combo_exit)
+
+    # Фокусируем окно, чтобы оно получало события клавиатуры
+    root.focus_force()
+
+
+# Регистрируем секретные лазейки
+t.onscreenclick(check_triple_click, btn=1)  # Левый клик для тройного клика
+
+# Настраиваем привязки клавиш
+setup_key_bindings()
+
+t.listen()
+t.speed(0)
+
+
+def draw_house():
+    t.penup()
+    t.goto(-200, -150)
+    t.pendown()
+
+    # Основание дома
+    t.fillcolor("#F5DEB3")
+    t.begin_fill()
+    for _ in range(4):
+        t.forward(150)
+        t.left(90)
+    t.end_fill()
+
+    # Крыша
+    t.penup()
+    t.goto(-200, 0)
+    t.pendown()
+    t.fillcolor("#8B4513")
+    t.begin_fill()
+    t.goto(-125, 80)
+    t.goto(-50, 0)
+    t.goto(-200, 0)
+    t.end_fill()
+
+    # Окно
+    t.penup()
+    t.goto(-170, -80)
+    t.pendown()
+    t.fillcolor("#87CEEB")
+    t.begin_fill()
+    for _ in range(4):
+        t.forward(50)
+        t.left(90)
+    t.end_fill()
+
+    # Рама окна
+    t.color("#8B4513")
+    t.penup()
+    t.goto(-145, -80)
+    t.pendown()
+    t.goto(-145, -30)
+    t.penup()
+    t.goto(-170, -55)
+    t.pendown()
+    t.goto(-120, -55)
+
+    # Дверь
+    t.penup()
+    t.goto(-110, -150)
+    t.pendown()
+    t.fillcolor("#654321")
+    t.begin_fill()
+    t.goto(-110, -60)
+    t.goto(-80, -60)
+    t.goto(-80, -150)
+    t.end_fill()
+
+    # Ручка двери
+    t.penup()
+    t.goto(-105, -105)
+    t.pendown()
+    t.dot(8, "gold")
+
+
+def draw_tree():
+    # Ствол
+    t.penup()
+    t.goto(150, -150)
+    t.pendown()
+    t.fillcolor("#8B4513")
+    t.begin_fill()
+    t.goto(150, -30)
+    t.goto(175, -30)
+    t.goto(175, -150)
+    t.goto(150, -150)
+    t.end_fill()
+
+    # Крона - симметричная вокруг ствола
+    t.penup()
+    t.goto(162.5, -30)
+    t.pendown()
+    t.fillcolor("#228B22")
+    t.begin_fill()
+    t.circle(62.5)
+    t.end_fill()
+
+    # Второй уровень кроны
+    t.penup()
+    t.goto(175, 10)
+    t.pendown()
+    t.begin_fill()
+    t.circle(50)
+    t.end_fill()
+
+    # Третий уровень кроны
+    t.penup()
+    t.goto(187.5, 40)
+    t.pendown()
+    t.begin_fill()
+    t.circle(37.5)
+    t.end_fill()
+
+
+def draw_sun():
+    t.penup()
+    t.goto(250, 160)
+    t.pendown()
+
+    # Основной круг солнца
+    t.fillcolor("yellow")
+    t.begin_fill()
+    t.circle(45)
+    t.end_fill()
+
+    # Лучи солнца
+    t.color("orange")
+    t.pensize(3)
+    for angle in range(0, 360, 30):
+        t.penup()
+        t.goto(250, 200)
+        t.pendown()
+        t.setheading(angle)
+        t.forward(70)
+
+    t.color("black")
+    t.pensize(1)
+
+
+def clear_screen():
+    t.penup()
+    t.goto(0, 0)
+    t.pendown()
+    t.clear()
+    screen.bgcolor("lightblue")
+
+
+def draw_plus_sign():
+    t.pensize(15)
+    t.color("black")
+    t.speed(0)
+
+    # Вертикальная линия
+    t.penup()
+    t.goto(0, 200)
+    t.pendown()
+    t.goto(0, -200)
+
+    # Горизонтальная линия
+    t.penup()
+    t.goto(-200, 0)
+    t.pendown()
+    t.goto(200, 0)
+
+    t.penup()
+    t.goto(-200, 0)
+    t.pendown()
+    t.goto(-200, 200)
+
+    t.penup()
+    t.goto(0, 200)
+    t.pendown()
+    t.goto(200, 200)
+
+    t.penup()
+    t.goto(200, 0)
+    t.pendown()
+    t.goto(200, -200)
+
+    t.penup()
+    t.goto(0, -200)
+    t.pendown()
+    t.goto(-200, -200)
+
+    t.pensize(1)
+
+
+def keep_focus():
+    """Периодически перефокусирует окно"""
+    root.focus_force()
+    if window_locked:  # Продолжаем только если окно заблокировано
+        root.after(1000, keep_focus)
+
+
+def main():
+    global window_locked
+
+    try:
+        # Перефокусируем окно для гарантии работы клавиатуры
+        root.after(100, lambda: root.focus_force())
+
+        # Рисуем улучшенный пейзаж
+        draw_house()
+        draw_tree()
+        draw_sun()
+
+        # Ждем 3 секунды
+        time.sleep(3)
+
+        # Очищаем экран
+        clear_screen()
+
+        # Рисуем знак +
+        draw_plus_sign()
+
+        # Ждем 10 секунд после завершения рисования
+        time.sleep(10)
+
+        # После завершения всей анимации разблокируем окно
+        # но секретные комбинации продолжают работать!
+        unlock_window()
+
+        print("Рисование завершено! Окно разблокировано.")
+        print("Секретные способы выхода всё ещё работают:")
+        print("1. Тройной клик левой кнопкой в левый нижний угол")
+        print("2. Комбинация клавиш Ctrl+Alt+X")
+        print("3. Теперь также можно закрыть через крестик")
+
+        # Запускаем основной цикл Turtle
+        t.mainloop()
+
+    except Exception as e:
+        print(f"Ошибка: {e}")
+    finally:
+        # Гарантируем выход
+        try:
+            t.bye()
+        except:
+            pass
+
+
+# Запускаем программу
+if __name__ == "__main__":
+    main()
