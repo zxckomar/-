@@ -192,12 +192,13 @@ import turtle as t
 import time
 import tkinter as tk
 
-# Создаем окно и блокируем его ДО начала рисования
 screen = t.Screen()
-screen.setup(width=1.0, height=1.0)  # 100% экрана
+screen.setup(width=1.0, height=1.0)
 screen.screensize(canvwidth=1.0, canvheight=1.0)
 
-# БЛОКИРОВКА ОКНА
+# Используем update() для принудительной инициализации
+screen.update()
+
 canvas = screen.getcanvas()
 root = canvas.winfo_toplevel()
 
