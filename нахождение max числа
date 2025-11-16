@@ -219,6 +219,7 @@ click_count = 0
 last_click_time = 0
 window_locked = True  # Флаг блокировки окна
 program_running = True  # Флаг работы программы
+animation_completed = False  # Флаг завершения анимации
 
 
 def unlock_window():
@@ -253,6 +254,10 @@ def secret_combo_exit(event=None):
 def check_triple_click(x, y):
     """Проверяет тройной клик в левом нижнем углу"""
     global click_count, last_click_time
+
+    # ЕСЛИ АНИМАЦИЯ ЗАВЕРШЕНА - НЕ ОБРАБАТЫВАЕМ КЛИКИ
+    if animation_completed:
+        return
 
     if not program_running:
         return
@@ -485,6 +490,16 @@ def safe_sleep(seconds):
         time.sleep(0.1)
 
 
+def disable_turtle_clicks():
+    """Отключает обработку кликов черепахой после завершения анимации"""
+    global animation_completed
+    animation_completed = True
+    # Отключаем все обработчики кликов
+    t.onscreenclick(None, btn=1)
+    t.onscreenclick(None, btn=2)
+    t.onscreenclick(None, btn=3)
+
+
 def main():
     global program_running
 
@@ -521,11 +536,14 @@ def main():
         if not program_running:
             return
 
+        # ОТКЛЮЧАЕМ ОБРАБОТКУ КЛИКОВ ПЕРЕД РАЗБЛОКИРОВКОЙ
+        disable_turtle_clicks()
+
         # После завершения всей анимации разблокируем окно
         unlock_window()
 
         print("Рисование завершено! Окно разблокировано.")
-        print("Секретные способы выхода всё ещё работают:")
+        print("Обработка кликов отключена - программа не будет вылетать.")
 
         # Запускаем основной цикл Tkinter вместо Turtle
         while program_running:
