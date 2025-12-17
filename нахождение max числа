@@ -1,3 +1,21 @@
+***
+#ёлочка
+x=0
+y=0
+z=9
+print((z-2)*" "+"|||")
+while y != (z+z-1)//2+1:
+    print(x*' '+ str(z)*(z+z-1))
+    x+=1
+    z-=1
+y=1
+x=9
+while x>0:
+    print((x-1)*" " + str(y)*(y+y-1))
+    x-=1
+    y+=1
+print((y-3)*" "+"|||")
+***
 from random import randint
 A = [randint(100, 120) for i in range(3)]
 print("Массив A:")
