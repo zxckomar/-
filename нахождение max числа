@@ -1,3 +1,109 @@
+
+import turtle
+
+# Настройка экрана
+screen = turtle.Screen()
+screen.bgcolor("lightblue")
+screen.title("Новогодняя ёлочка")
+
+# Настройка черепашки
+t = turtle.Turtle()
+t.speed(10)
+t.hideturtle()
+
+# елку рисуем
+# Нижний ярус (самый большой треугольник)
+t.penup()
+t.goto(-90, -120)  # левый нижний угол
+t.pendown()
+t.color("darkgreen")
+t.begin_fill()
+for _ in range(3):
+    t.forward(180)
+    t.left(120)
+t.end_fill()
+
+# Средний ярус
+t.penup()
+t.goto(-70, -30)   # сдвиг внутрь
+t.pendown()
+t.color("forestgreen")
+t.begin_fill()
+for _ in range(3):
+    t.forward(140)
+    t.left(120)
+t.end_fill()
+
+# Верхний ярус (маленький)
+t.penup()
+t.goto(-50, 40)    # ещё сдвиг внутрь
+t.pendown()
+t.color("limegreen")
+t.begin_fill()
+for _ in range(3):
+    t.forward(100)
+    t.left(120)
+t.end_fill()
+
+# ствол
+t.penup()
+t.goto(-20, -180)  # ниже ёлки
+t.pendown()
+t.color("saddlebrown")
+t.begin_fill()
+for _ in range(2):
+    t.forward(40)
+    t.left(90)
+    t.forward(60)
+    t.left(90)
+t.end_fill()
+
+# звёздочка
+top_y = 40 + 86.6
+t.penup()
+t.goto(-14.5, top_y + 10)  # немного выше верхушки
+t.pendown()
+t.color("gold")
+t.begin_fill()
+for _ in range(5):
+    t.forward(30)
+    t.right(144)
+t.end_fill()
+
+# шарики на ели
+balls = [
+    # Нижний ярус
+    (-50, -70, 15, "red"),
+    (30, -90, 15, "blue"),
+    (-20, -110, 15, "yellow"),
+    (60, -60, 15, "purple"),
+    # Средний ярус
+    (-40, 0, 12, "cyan"),
+    (25, -20, 12, "pink"),
+    (0, -40, 12, "white"),
+    # Верхний ярус
+    (-15, 60, 10, "orange"),
+    (20, 50, 10, "magenta")
+]
+
+for x, y, size, color in balls:
+    t.penup()
+    t.goto(x, y)
+    t.pendown()
+    t.color(color)
+    t.begin_fill()
+    t.circle(size)
+    t.end_fill()
+
+# с новой годой
+t.penup()
+t.goto(0, -220)
+t.color("darkred")
+t.write("С Новым Годом!", align="center", font=("Arial", 24, "bold"))
+
+# Завершение
+screen.mainloop()
+#SPJKDBNPSIJGPISAUERGBPIRSATUPSJTBNDPISGEPH-ERWHGOIJNFOIUAHFVOJKQWEORTHQEVFQDOEWRBV17YRQOWIERNVYBQWE0RCQWEORY0QW98E8XDUR9QWY8R0QW8UECRI9QWFCJQWDOPFAIUSDFH
 ***
 #ёлочка
 x=0
